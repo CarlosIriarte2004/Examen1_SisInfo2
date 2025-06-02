@@ -31,7 +31,7 @@
 				},
 				{
 					"name": "aggregate1",
-					"description": "Agregacion de datos por \"City\" que genera las columnas"
+					"description": "Agregación de datos por \"City\" que genera las columnas"
 				}
 			],
 			"scriptLines": [
@@ -82,8 +82,9 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
-				"select1 sort(asc(ERROR_FUNCTION(''), true)) ~> sort1",
-				"sort1 aggregate(groupBy(City)) ~> aggregate1",
+				"select1 sort(asc(City, true)) ~> sort1",
+				"sort1 aggregate(groupBy(City),",
+				"     Total = count()) ~> aggregate1",
 				"aggregate1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
