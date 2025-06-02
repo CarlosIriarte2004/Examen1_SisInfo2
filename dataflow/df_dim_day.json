@@ -78,7 +78,11 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          DAY_ID = Total,",
+				"          DAY_NAME = Day",
+				"     )) ~> sink1"
 			]
 		}
 	}
