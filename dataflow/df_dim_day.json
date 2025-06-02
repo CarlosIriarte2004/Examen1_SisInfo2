@@ -80,7 +80,6 @@
 				"     skipDuplicateMapOutputs: true,",
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
-				"          DAY_ID = Total,",
 				"          DAY_NAME = Day",
 				"     )) ~> sink1"
 			]
