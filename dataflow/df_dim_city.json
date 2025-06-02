@@ -1,0 +1,104 @@
+{
+	"name": "df_dim_city",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Aemf1_csv",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "dim_city",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "select1"
+				},
+				{
+					"name": "sort1",
+					"description": "Se estan agregando las filas segun las columnas \"City:"
+				},
+				{
+					"name": "aggregate1",
+					"description": "Agregacion de datos por \"City\" que genera las columnas"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          City as string,",
+				"          Price as string,",
+				"          Day as string,",
+				"          {Room Type} as string,",
+				"          {Shared Room} as string,",
+				"          {Private Room} as string,",
+				"          {Person Capacity} as string,",
+				"          Superhost as string,",
+				"          {Multiple Rooms} as string,",
+				"          Business as string,",
+				"          {Cleanliness Rating} as string,",
+				"          {Guest Satisfaction} as string,",
+				"          Bedrooms as string,",
+				"          {City Center (km)} as string,",
+				"          {Metro Distance (km)} as string,",
+				"          {Attraction Index} as string,",
+				"          {Normalised Attraction Index} as string,",
+				"          {Restraunt Index} as string,",
+				"          {Normalised Restraunt Index} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 select(mapColumn(",
+				"          City,",
+				"          Price,",
+				"          Day,",
+				"          {Room Type},",
+				"          {Shared Room},",
+				"          {Private Room},",
+				"          {Person Capacity},",
+				"          Superhost,",
+				"          {Multiple Rooms},",
+				"          Business,",
+				"          {Cleanliness Rating},",
+				"          {Guest Satisfaction},",
+				"          Bedrooms,",
+				"          {City Center (km)},",
+				"          {Metro Distance (km)},",
+				"          {Attraction Index},",
+				"          {Normalised Attraction Index},",
+				"          {Restraunt Index},",
+				"          {Normalised Restraunt Index}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 sort(asc(ERROR_FUNCTION(''), true)) ~> sort1",
+				"sort1 aggregate(groupBy(City)) ~> aggregate1",
+				"aggregate1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          CITY_ID as integer,",
+				"          CITY as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+			]
+		}
+	}
+}
