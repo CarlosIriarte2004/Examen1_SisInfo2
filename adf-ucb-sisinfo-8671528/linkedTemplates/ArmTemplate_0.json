@@ -535,7 +535,6 @@
 						"     skipDuplicateMapOutputs: true,",
 						"     errorHandlingOption: 'stopOnFirstError',",
 						"     mapColumn(",
-						"          CITY_ID = Total,",
 						"          CITY = City",
 						"     )) ~> sink1"
 					]
