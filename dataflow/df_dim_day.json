@@ -33,9 +33,6 @@
 				}
 			],
 			"scriptLines": [
-				"parameters{",
-				"     parámetro1 as integer",
-				"}",
 				"source(output(",
 				"          City as string,",
 				"          Price as string,",
