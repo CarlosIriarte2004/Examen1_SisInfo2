@@ -1,0 +1,56 @@
+{
+	"name": "dim_hechos_airbnb",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dw_airbnb",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DW"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "HECHOS_ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "PRICE",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			},
+			{
+				"name": "CITY_ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "DAY_ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ROOM_TYPE_ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "HOST_ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "LOCATION_ID",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "HECHOS_AIRBNB"
+		}
+	}
+}
