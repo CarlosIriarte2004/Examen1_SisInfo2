@@ -68,7 +68,7 @@
 				"sort1 aggregate(groupBy(Superhost,",
 				"          Business,",
 				"          {Multiple Rooms}),",
-				"     Total = count(1)) ~> aggregate1",
+				"     Total = count()) ~> aggregate1",
 				"aggregate1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -89,7 +89,7 @@
 				"          SUPERHOST = Superhost,",
 				"          MULTIPLE_ROOMS = {Multiple Rooms},",
 				"          BUSINESS = Business,",
-				"          Total",
+				"          HOST_ID = Total",
 				"     )) ~> sink1"
 			]
 		}
