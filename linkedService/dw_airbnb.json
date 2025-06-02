@@ -1,0 +1,17 @@
+{
+	"name": "dw_airbnb",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"server": "sql-ucb-sisinfo-8671528.database.windows.net",
+			"database": "dw_airbnb",
+			"encrypt": "mandatory",
+			"trustServerCertificate": false,
+			"authenticationType": "SQL",
+			"userName": "ucbsqladmin",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDdBNDJFOTg0LTAwOEMtNDQ1My05ODA0LTg4NDdBQUQwN0U0Ml9lNDgwYjUyZi0zYjAwLTRmY2MtOTkwNi1lMDM1MmJlN2JmZDAiDQp9"
+		}
+	}
+}
