@@ -88,7 +88,8 @@
 				"     mapColumn(",
 				"          SUPERHOST = Superhost,",
 				"          MULTIPLE_ROOMS = {Multiple Rooms},",
-				"          BUSINESS = Business",
+				"          BUSINESS = Business,",
+				"          Total",
 				"     )) ~> sink1"
 			]
 		}
