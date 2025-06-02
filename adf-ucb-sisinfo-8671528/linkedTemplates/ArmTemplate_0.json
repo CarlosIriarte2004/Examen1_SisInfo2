@@ -546,6 +546,97 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/df_dim_day')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Aemf1_csv",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "dim_day",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "select1"
+						},
+						{
+							"name": "sort1"
+						},
+						{
+							"name": "aggregate1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          City as string,",
+						"          Price as string,",
+						"          Day as string,",
+						"          {Room Type} as string,",
+						"          {Shared Room} as string,",
+						"          {Private Room} as string,",
+						"          {Person Capacity} as string,",
+						"          Superhost as string,",
+						"          {Multiple Rooms} as string,",
+						"          Business as string,",
+						"          {Cleanliness Rating} as string,",
+						"          {Guest Satisfaction} as string,",
+						"          Bedrooms as string,",
+						"          {City Center (km)} as string,",
+						"          {Metro Distance (km)} as string,",
+						"          {Attraction Index} as string,",
+						"          {Normalised Attraction Index} as string,",
+						"          {Restraunt Index} as string,",
+						"          {Normalised Restraunt Index} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> source1",
+						"source1 select(mapColumn(",
+						"          Day",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select1",
+						"select1 sort(asc(Day, true)) ~> sort1",
+						"sort1 aggregate(groupBy(Day),",
+						"     Total = count(1)) ~> aggregate1",
+						"aggregate1 sink(allowSchemaDrift: true,",
+						"     validateSchema: true,",
+						"     input(",
+						"          DAY_ID as integer,",
+						"          DAY_NAME as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Aemf1_csv')]",
+				"[concat(variables('factoryId'), '/datasets/dim_day')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/pl_dim_city')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -589,6 +680,53 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/df_dim_city')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_dim_day')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Data flow1",
+						"description": "Ejecutar df_dim_day",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "df_dim_day",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/df_dim_day')]"
 			]
 		}
 	]
